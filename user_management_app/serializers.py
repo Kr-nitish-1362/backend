@@ -22,7 +22,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
         fields = (
-            'user_id', 'username', 'first_name', 'last_name', 'email', 'profile_image','address', 'password', 'password2', 'is_active', 'is_admin', 'created_at', 'updated_at', 'is_deleted'
+            'user_id', 'username', 'first_name', 'last_name', 'email', 'address', 'password', 'password2', 'is_active', 'is_admin', 'created_at', 'updated_at', 'is_deleted'
         )
 
     def validate(self, attrs):
@@ -35,24 +35,25 @@ class RegisterUserSerializer(serializers.ModelSerializer):
     @transaction.atomic()
     def create(self, validated_data):
         validated_data.pop('password2', None)
-        password = validated_data.pop('password')
-        email = validated_data.get('email')
         
         try:
-            user_object = UserAccount.objects.create(**validated_data, username=email)
+            user_object = UserAccount.objects.create_user(
+                first_name=validated_data['first_name'],
+                last_name=validated_data['last_name'],
+                email=validated_data['email'],
+                password=validated_data['password'],
+                )
         except IntegrityError:
             raise serializers.ValidationError(
                 {"error": 'Something went wrong!'})
         except Exception as e:
             print(e)
             
-        user_object.set_password(password)
-        user_object.save()
         return user_object
 
 class RetrieveUpdateDestroyUserSerialiser(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
         fields = (
-            'user_id', 'first_name', 'last_name', 'email', 'profile_image','address', 'is_active', 'is_admin', 'created_at', 'updated_at', 'is_deleted'
+            'user_id', 'first_name', 'last_name', 'email', 'address', 'is_active', 'is_admin', 'created_at', 'updated_at', 'is_deleted'
         )

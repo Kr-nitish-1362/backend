@@ -17,3 +17,6 @@
 # JWT Token config {Optional, in minutes}
 #ACCESS_TOKEN_LIFETIME=60
 #REFRESH_TOKEN_LIFETIME=10800
+
+# Set API BASEPATH here {Mandatory}
+#API_BASEPATH = "http://localhost:8000/"

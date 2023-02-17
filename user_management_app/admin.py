@@ -16,7 +16,7 @@ class UserCreationForm(forms.ModelForm):
     class Meta:
         model = models.UserAccount
         fields = (
-            'user_id', 'username', 'first_name', 'last_name', 'email', 'profile_image','address', 'is_active', 'is_admin', 'is_staff', 'is_superuser', 
+            'user_id', 'username', 'first_name', 'last_name', 'email', 'address', 'is_active', 'is_admin', 'is_staff', 'is_superuser', 
         )
 
     def clean_password2(self):
@@ -48,7 +48,7 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = models.UserAccount
         fields = (
-            'user_id', 'username', 'first_name', 'last_name', 'email', 'profile_image','address', 'is_active', 'is_admin', 'is_staff', 'is_superuser', 
+            'user_id', 'username', 'first_name', 'last_name', 'email', 'address', 'is_active', 'is_admin', 'is_staff', 'is_superuser', 
         )
 
 class UserAccountAdmin(UserAdmin):
@@ -56,13 +56,13 @@ class UserAccountAdmin(UserAdmin):
     add_form = UserCreationForm
 
     list_display = (
-        'user_id', 'username', 'first_name', 'last_name', 'email', 'profile_image', 'address', 'is_active', 'is_admin', 'is_staff', 'is_superuser', 'is_deleted', 'created_at', 'updated_at', 
+        'user_id', 'username', 'first_name', 'last_name', 'email', 'address', 'is_active', 'is_admin', 'is_staff', 'is_superuser', 'is_deleted', 'created_at', 'updated_at', 
     )
 
     list_filter = ()
 
     fieldsets = (
-        (None, {'fields': ('username', 'password', 'first_name', 'last_name', 'email', 'profile_image', 'address', 'is_active', 'is_admin', 'is_staff', 'is_superuser'
+        (None, {'fields': ('username', 'password', 'first_name', 'last_name', 'email', 'address', 'is_active', 'is_admin', 'is_staff', 'is_superuser'
         )}),
     )
 

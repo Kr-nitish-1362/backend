@@ -9,7 +9,7 @@ class UserAccountManager(BaseUserManager):
             email = self.normalize_email(email)
         
         user = self.model(
-            first_name=first_name, last_name=last_name, email=email, **extra_fields
+            first_name=first_name, last_name=last_name, email=email, username=email,**extra_fields
         )
         user.is_active = True
         user.set_password(password)
@@ -34,7 +34,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True, null=True, blank=True)
-    profile_image = models.ImageField(upload_to = 'uploads/images/profile_images', null=True, blank=True)
     address = models.CharField(max_length=510, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

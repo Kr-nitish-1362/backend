@@ -1,56 +1,29 @@
-from user_management_app.models import UserAccount
-from user_management_app.serializers import *
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import generics, status
-from rest_framework.response import Response
-from django.contrib.auth import authenticate, get_user_model
-from django.shortcuts import get_object_or_404
-from django.utils import timezone
+from django.shortcuts import render, redirect
+import requests, json
+from mysite.constants import API_BASEPATH
 
-# Create your views here.
-class Register(generics.CreateAPIView):
-    serializer_class = RegisterUserSerializer
-    queryset = UserAccount.objects.all()
+def UserRegisterForm(request):
+    if request.method == 'GET':
+        return render(request,'register.html')
 
-class Login(generics.GenericAPIView):
-    def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
-        username = None
-        
-        if email:
-            user_object = UserAccount.objects.filter(email=email).first()
-            if user_object is not None:
-                username = user_object.username
-        else:
-            return Response(
-                {'error': 'Some parameter is missing!'}, 
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        user_obj = authenticate(username=username, password=password)
-        if user_obj is not None:
-            user_obj.save()
-            result = {}
-            # Generate a JWT Token for the admin
-            refresh = RefreshToken.for_user(user_obj)
-            result["access_token"] = str(refresh.access_token)
-            result["refresh_token"] = str(refresh)
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
 
-            return Response(result, status=status.HTTP_200_OK)
-        else:
-            return Response(
-                    {'error': 'username or password is incorrect!'}, 
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+        url = API_BASEPATH + "register/"
+        payload={
+            'first_name' : first_name,
+            'last_name' : last_name,
+            'email' : email,
+            'password' : password,
+            'password2' : password2,
+        }
+        apiResult = json.loads(requests.request("POST", url, data=payload).text)
+        return redirect("sign-in")
 
-class RetrieveUpdateDestroyUser(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
-    serializer_class = RetrieveUpdateDestroyUserSerialiser
-    queryset = UserAccount.objects.all()
-
-    def get_object(self):
-        obj = get_object_or_404(get_user_model(), pk=self.request.user.user_id)
-        return obj
-
+def UserLoginForm(request):
+    if request.method == 'GET':
+        return render(request,'login.html')

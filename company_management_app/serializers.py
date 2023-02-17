@@ -6,7 +6,7 @@ class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = (
-            'company_id', 'shopkeeper', 'company_name', 'company_address', 'company_logo', 'company_banner', 'company_description', 'gst_number', 'business_email',
+            'company_id', 'shopkeeper', 'company_name', 'company_address', 'company_description', 'gst_number', 'business_email',
         )
 
     def create(self, validated_data):

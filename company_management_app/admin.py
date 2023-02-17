@@ -8,8 +8,6 @@ class CompanyAdmin(admin.ModelAdmin):
         'shopkeeper',
         'company_name',
         'company_address',
-        'company_logo',
-        'company_banner',
         'company_description',
         'gst_number',
         'business_email',
