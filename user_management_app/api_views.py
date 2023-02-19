@@ -41,7 +41,7 @@ class Login(generics.GenericAPIView):
             return Response(result, status=status.HTTP_200_OK)
         else:
             return Response(
-                    {'error': 'username or password is incorrect!'}, 
+                    {'error': 'username or password is incorrect!',}, 
                     status=status.HTTP_400_BAD_REQUEST
                 )
 

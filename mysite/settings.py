@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # First-party apps
-    'common_app',
     'user_management_app',
     'company_management_app',
+    'common_app',
 
     # External Apps/Packages
     'corsheaders',

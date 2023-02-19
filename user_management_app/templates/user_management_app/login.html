@@ -1,0 +1,35 @@
+{% extends 'common_app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if error %}
+<div class="error-message" style="background-color: #ff000066; text-align: center;">{{error}}</div>
+
+{% endif %}
+
+<div class="uppercontainer">
+    <div class="container login-box">
+        <div class="heading">Login</div>
+        <form method="POST" id="login-form">
+            {% csrf_token %}
+            <div class="formUpperContainer formcontainer">
+                <input type="email" id="email" class="form-control" name="email"
+                    placeholder="Email" required>
+            </div>
+            <div class="formUpperContainer formcontainer">
+                <input type="password" id="password" class="form-control"
+                    name="password"
+                    placeholder="Password" required>
+            </div>
+            <button type="submit"  class="btn btn-primary
+                form-control">Login</button>
+            <p class="smallText">Don't have an account? <a
+                    href="/sign-up">Register Now</a></p>
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}
+

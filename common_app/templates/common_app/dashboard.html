@@ -1,0 +1,80 @@
+{% extends 'common_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="uppercontainer">
+    <div class="container" style="min-height: 80vh;">
+        <div class="heading">Dashboard</div>
+        <div style="display: flex; justify-content: right; margin-bottom:
+            1rem;">
+            {% if not response.company %}
+            <a class="btn btn-primary mr-3" style="color: white;" href="/add-company">Add Company</a>
+            {% else %}
+            {{''}}
+            {% endif %}
+            <a class="btn btn-danger" style="color: white;" href="{% url 'logout' %}">Logout</a>
+        </div>
+
+        <div class="container">
+            <div class="cardHeader">
+                <div class="pl-3">
+                    <div class="h3">
+                        {% if response.first_name and response.last_name %}
+                        {{response.first_name}} {{response.last_name}}
+                        {% else %}
+                        {{''}}
+                        {% endif %}
+                    </div>
+                    <p class="h6 text-muted">
+                        {% if response.email %}
+                        {{response.email}}
+                        {% else %}
+                        {{''}}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="pr-3 ">
+                    <a href="/update-profile"><i class="fa-solid fa-pen mr-3 text-muted"></i></a>
+                    <a href="{% url 'delete-profile' %}"><i class="fa-solid fa-trash text-muted"></i></a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if response.address %}
+                {{response.address}}
+                {% else %}
+                {{''}}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mb-5"></div>
+
+        {% if response.company %}
+        <div class="container">
+            <div class="cardHeader">
+                <div class="pl-3">
+                    <div class="h3">{{response.company.company_name}} GST({{response.company.gst_number}})</div>
+                    <p class="h6 text-muted">{{response.company.business_email}}</p>
+                </div>
+                <div class="pr-3 ">
+                    <a href="/update-company"><i class="fa-solid fa-pen mr-3 text-muted"></i></a>
+                    <a href="{% url 'delete-company' %}"><i class="fa-solid fa-trash text-muted"></i></a>
+                </div>
+            </div>
+            <div class="pl-3 mt-4">
+                <div class="card-title bold">Description</div>
+                <div class="card-title">{{response.company.company_description}}</div>
+            </div>
+            <div class="pl-3 mt-4">
+                <div class="card-title bold">Address</div>
+                <div class="card-title">{{response.company.company_address}}</div>
+            </div>
+        </div>
+        {% else %}
+        {{''}}
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock content %}

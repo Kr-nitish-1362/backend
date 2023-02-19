@@ -24,6 +24,7 @@ router = SimpleRouter()
 
 urlpatterns = [
     path('superadmin/', admin.site.urls),
+    path('', include('common_app.urls')),
     path('', include('user_management_app.urls')),
     path('', include('company_management_app.urls')),
 ]

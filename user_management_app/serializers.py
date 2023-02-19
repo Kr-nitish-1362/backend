@@ -1,6 +1,8 @@
 from django.db import transaction
 from rest_framework import serializers
 from user_management_app.models import UserAccount
+from company_management_app.models import Company
+from company_management_app.serializers import CompanySerializer
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from django.db import IntegrityError
@@ -52,8 +54,16 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         return user_object
 
 class RetrieveUpdateDestroyUserSerialiser(serializers.ModelSerializer):
+    company = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = UserAccount
         fields = (
-            'user_id', 'first_name', 'last_name', 'email', 'address', 'is_active', 'is_admin', 'created_at', 'updated_at', 'is_deleted'
+            'user_id', 'first_name', 'last_name', 'email', 'address', 'is_active', 'is_admin', 'created_at', 'updated_at', 'is_deleted', 'company'
         )
+
+    def get_company(self, instance):
+        company_obj = Company.objects.filter(shopkeeper=instance).first()
+        if company_obj:
+            return CompanySerializer(company_obj).data
+        else:
+            return None

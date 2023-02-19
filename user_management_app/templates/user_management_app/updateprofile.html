@@ -1,0 +1,30 @@
+{% extends 'common_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="uppercontainer">
+    <div class="container login-box">
+        <div class="heading">User Profile</div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="formUpperContainer alignRow formcontainer">
+                <input type="text" class="form-control" name="first_name"
+                    placeholder="First Name" value="{{response.first_name}}" required>
+                <input type="text" class="form-control" name="last_name"
+                    placeholder="Last Name" value="{{response.last_name}}" required>
+            </div>
+            <input type="email" class="form-control" name="email"
+                placeholder="Email" value="{{response.email}}" required>
+
+            <div class="formcontainer">
+                <input type="text" class="form-control" name="address"
+                placeholder="Address" value="{% if response.address %}{{response.address}}{% else %}{{''}}{% endif %}" required>
+            </div>
+ 
+            <button type="submit" class="btn btn-primary form-control">Update Profile</button>
+            <div class="formUpperContainer formcontainer"><a style="font-size:
+                14px;" href="/dashboard">BACK</a></div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

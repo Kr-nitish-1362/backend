@@ -1,0 +1,36 @@
+{% extends 'common_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="uppercontainer">
+    <div class="container">
+        <div class="heading">
+            Company Profile
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="formUpperContainer formcontainer alignRow">
+                <input type="text" class="form-control" name="company_name"
+                    placeholder="Company Name" required>
+                <input type="text" class="form-control" name="company_address"
+                    placeholder="Company Address" required>
+            </div>
+            <div class="formUpperContainer formcontainer alignRow">
+                <input type="text" class="form-control" name="gst_number"
+                    placeholder="GST Number" required>
+                <input type="text" class="form-control" name="business_email"
+                    placeholder="Business Email" required>
+            </div>
+            <div class="formcontainer">
+                <textarea name="company_description" class="form-control"
+                    rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary form-control">Create
+                Company</button>
+            <div class="formUpperContainer formcontainer"><a style="font-size:
+                    14px;" href="/dashboard">BACK</a></div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
